@@ -1,0 +1,701 @@
+Vending Machine (Automated Dispensing System)
+
+Parking Lot (Vehicle Parking Management System)
+
+Cache – LRU/LFU (In-Memory Cache System)
+
+BookMyShow (Ticket Booking System)
+
+Elevator (Lift Control System)
+
+Ride Sharing (Ride Matching System)
+
+URL Shortener (Link Management System)
+
+Logging Framework (Application Logging System)
+
+Shopping Cart (E-Commerce Cart System)
+
+File System (Hierarchical Storage System)
+
+YouTube (Video Streaming Platform)
+
+WhatsApp / Instagram (Messaging / Social Media Platform)
+
+
+Vending Machine
+
+(Automated Dispensing System - ATM Machine, Ticket Booking / Ticket Vending System, Coffee / Beverage Dispenser Machine, Self-Checkout Kiosk (Retail), Fuel Pump System) 
+All operate via states (Idle, Processing, Dispensing, Error) and commands (Select, Pay, Cancel).
+
+LLD Design
+
+Vending Machine (Automated Dispensing System)
+
+Works on Pattern(s)
+
+State Pattern (Primary)
+
+Command Pattern (Secondary)
+
+How it works
+
+State Pattern
+
+Each machine state (Idle, HasMoney, Dispensing, OutOfStock) is modeled as a separate class.
+
+User actions trigger state transitions instead of large conditional logic.
+
+Command Pattern
+
+User actions like InsertCoin, SelectItem, CancelTransaction are encapsulated as commands.
+
+Commands can be queued, validated, or undone independently.
+
+Purpose of using the Pattern(s)
+
+State Pattern
+
+Eliminates complex if-else state checks.
+
+Makes state transitions explicit and easier to extend.
+
+Command Pattern
+
+Decouples user actions from business logic execution.
+
+Enables flexible handling of input actions and future extensibility.
+
+
+Entities (with SRP)
+
+VendingMachine – Controls overall flow
+
+State – Handles behavior for a specific machine state
+
+Product – Stores product details
+
+Inventory – Manages stock levels
+
+PaymentProcessor – Validates and processes payments
+
+Coin / Note – Represents denomination
+
+Dispenser – Dispenses selected item
+------------------------------
+
+Parking Lot
+
+(Vehicle Parking Management System - Toll Booth System, Airport Gate Allocation System, Vehicle Rental System, Warehouse Slot Allocation System, Hotel Room Allocation System, Bike / Scooter Parking System)
+All involve object creation (spot/ticket/type) and dynamic pricing or allocation strategies.
+
+LLD Design
+
+Parking Lot (Vehicle Parking Management System)
+
+Works on Pattern(s)
+
+Strategy Pattern (Primary)
+
+Factory Pattern (Secondary)
+
+How it works
+
+Strategy Pattern
+
+Parking slot allocation logic (nearest slot, lowest floor, EV-first, reserved) is encapsulated as interchangeable strategies.
+
+The parking system delegates slot selection to the chosen strategy at runtime.
+
+Factory Pattern
+
+Responsible for creating different Vehicle and ParkingSlot objects (Car, Bike, Truck, EV, Compact, Large).
+
+Object creation logic is centralized and abstracted from business flow.
+
+Purpose of using the Pattern(s)
+
+Strategy Pattern
+
+Allows changing parking rules without modifying core parking logic.
+
+Supports multiple allocation algorithms based on business needs.
+
+Factory Pattern
+
+Decouples object creation from usage.
+
+Makes it easy to introduce new vehicle or slot types without impacting existing code.
+
+Entities (with SRP)
+
+ParkingLot – Coordinates parking operations
+
+ParkingFloor – Manages spots on a floor
+
+ParkingSpot – Tracks availability and assignment
+
+Vehicle – Vehicle information
+
+Ticket – Entry/exit tracking
+
+Gate – Entry/exit control
+
+PricingStrategy – Fee calculation
+
+PaymentProcessor – Payment handling
+
+--------------------------------
+
+
+Cache (LRU / LFU)
+
+(In-Memory Cache System — Similar systems: Browser Cache, CDN Cache, Session Cache)
+
+LLD Design
+
+Cache (In-Memory Cache System)
+
+Works on Pattern(s)
+
+Strategy Pattern (Primary)
+
+How it works
+
+Strategy Pattern
+
+Cache eviction logic (LRU, LFU, FIFO) is implemented as separate strategy classes.
+
+The cache delegates eviction decisions to the configured strategy without knowing its internal logic.
+
+Purpose of using the Pattern(s)
+
+Strategy Pattern
+
+Enables switching eviction algorithms without changing cache implementation.
+
+Keeps eviction logic isolated and easily extensible.
+
+Entities (with SRP)
+
+Cache – Cache orchestration
+
+CacheEntry – Key-value storage
+
+EvictionPolicy – Eviction decision logic
+
+LRUStrategy / LFUStrategy – Policy-specific behavior
+
+Storage – Underlying data store
+
+-------------------------------------
+
+
+BookMyShow
+
+(Ticket Booking System — Similar systems: Airline Seat Booking, Train Reservation System)
+
+LLD Design
+
+BookMyShow (Ticket Booking System)
+
+Works on Pattern(s)
+
+State Pattern (Primary)
+
+Observer Pattern (Secondary)
+
+How it works
+
+State Pattern
+
+A seat transitions through states such as Available → Locked → Booked → Cancelled.
+
+Each state controls which operations are allowed at that point.
+
+Observer Pattern
+
+Booking events (confirmation, cancellation, timeout) notify interested parties.
+
+Users, payment services, and notification services act as observers.
+
+Purpose of using the Pattern(s)
+
+State Pattern
+
+Prevents invalid seat operations and race conditions.
+
+Makes seat lifecycle management clear and maintainable.
+
+Observer Pattern
+
+Decouples booking logic from notification handling.
+
+Enables scalable event-driven communication.
+
+
+Entities (with SRP)
+
+User – User profile
+
+Movie – Movie metadata
+
+Theater – Theater details
+
+Screen – Screen configuration
+
+Show – Movie timing
+
+Seat – Seat state
+
+Booking – Reservation lifecycle
+
+PaymentProcessor – Payment handling
+
+----------------------------------
+
+
+Elevator
+
+(Lift Control System — Similar systems: Escalator Control, Warehouse Robot Movement System)
+
+LLD Design
+
+Elevator (Lift Control System)
+
+Works on Pattern(s)
+
+Strategy Pattern (Primary)
+
+Observer Pattern (Secondary)
+
+How it works
+
+Strategy Pattern
+
+Elevator scheduling logic (SCAN, LOOK, nearest car, priority-based) is implemented as interchangeable strategies.
+
+The controller delegates request assignment to the selected strategy.
+
+Observer Pattern
+
+Floor panels and display boards observe elevator state changes.
+
+Updates occur automatically when elevator position or direction changes.
+
+Purpose of using the Pattern(s)
+
+Strategy Pattern
+
+Allows experimenting with different scheduling algorithms without rewriting control logic.
+
+Improves scalability as traffic patterns change.
+
+Observer Pattern
+
+Decouples elevator movement logic from UI and display updates.
+
+Enables real-time updates across multiple observers.
+
+Entities (with SRP)
+
+ElevatorSystem – Overall coordination
+
+Elevator – Individual lift behavior
+
+Controller – Request scheduling
+
+Request – Floor request
+
+DirectionStrategy – Movement decision logic
+
+Door – Door operations
+-----------------------------------
+
+Ride Sharing
+
+(Ride Matching System — Similar systems: Food Delivery Assignment, Courier Dispatch System)
+
+LLD Design
+
+Ride Sharing (Ride Matching System)
+
+Works on Pattern(s)
+
+Strategy Pattern (Primary)
+
+Factory Pattern (Secondary)
+
+How it works
+
+Strategy Pattern
+
+Driver matching logic (nearest driver, highest rating, surge-based) is implemented as interchangeable strategies.
+
+The system selects the appropriate strategy based on context and demand.
+
+Factory Pattern
+
+Creates different ride objects (Standard, Premium, Pool).
+
+Encapsulates ride creation logic away from matching and pricing workflows.
+
+Purpose of using the Pattern(s)
+
+Strategy Pattern
+
+Enables dynamic switching of matching algorithms.
+
+Keeps the core ride flow independent of business rules.
+
+Factory Pattern
+
+Simplifies object creation and enforces consistency.
+
+Makes it easy to introduce new ride types.
+
+Entities (with SRP)
+
+User – Rider / Driver profile
+
+Driver – Driver-specific data
+
+Vehicle – Vehicle info
+
+RideRequest – Ride intent
+
+Ride – Ride lifecycle
+
+MatchingStrategy – Driver matching logic
+
+PricingStrategy – Fare calculation
+
+PaymentProcessor – Payment handling
+--------------------------------
+
+
+URL Shortener
+
+(Link Management System — Similar systems: Invite Link Generator, File Share Link System)
+
+LLD Design
+
+URL Shortener (Link Management System)
+
+Works on Pattern(s)
+
+Factory Pattern (Primary)
+
+Singleton Pattern (Secondary)
+
+How it works
+
+Factory Pattern
+
+Responsible for creating short URL objects using different generation strategies (hash-based, sequence-based).
+
+Encapsulates URL creation logic away from request handling.
+
+Singleton Pattern
+
+A single ID/sequence generator instance is shared across the system.
+
+Ensures consistency and avoids duplicate short codes.
+
+Purpose of using the Pattern(s)
+
+Factory Pattern
+
+Centralizes URL creation logic.
+
+Allows introducing new shortening algorithms without changing consumers.
+
+Singleton Pattern
+
+Guarantees a single source of truth for ID generation.
+
+Prevents collisions and synchronization issues.
+
+Entities (with SRP)
+
+User – User account
+
+URLMapping – Short ↔ long URL mapping
+
+ShortCodeGenerator – Code generation logic
+
+RedirectService – Redirection handling
+
+Analytics – Click tracking
+-------------------------
+
+
+Logging Framework
+
+(Application Logging System — Similar systems: Audit Trail System, Monitoring & Telemetry System)
+
+LLD Design
+
+Logging Framework (Application Logging System)
+
+Works on Pattern(s)
+
+Chain of Responsibility Pattern (Primary)
+
+Singleton Pattern (Secondary)
+
+How it works
+
+Chain of Responsibility Pattern
+
+Log requests pass through a chain of handlers (INFO → DEBUG → WARN → ERROR).
+
+Each handler decides whether to process or forward the log entry.
+
+Singleton Pattern
+
+Ensures only one logger instance exists across the application.
+
+Provides a global access point for logging.
+
+Purpose of using the Pattern(s)
+
+Chain of Responsibility Pattern
+
+Enables flexible log routing and filtering.
+
+Avoids hard-coded conditional logic for log levels.
+
+Singleton Pattern
+
+Prevents multiple logger instances and configuration conflicts.
+
+Ensures consistent logging behavior.
+
+Entities (with SRP)
+
+Logger – Logging interface
+
+LogMessage – Log data
+
+LogLevelHandler – Handles specific log levels
+
+Appender – Output destination (file/console/db)
+
+Formatter – Log format logic
+-------------------------
+
+Shopping Cart
+
+(E-Commerce Cart System — Similar systems: Food Ordering Cart, Subscription Checkout System)
+
+LLD Design
+
+Shopping Cart (E-Commerce Cart System)
+
+Works on Pattern(s)
+
+Strategy Pattern (Primary)
+
+Decorator Pattern (Secondary)
+
+How it works
+
+Strategy Pattern
+
+Pricing logic (discounts, taxes, offers, surge pricing) is implemented as interchangeable strategies.
+
+The cart delegates total price calculation to the selected strategy.
+
+Decorator Pattern
+
+Additional features like coupons, gift wrapping, loyalty points are layered dynamically on the cart.
+
+Each decorator adds behavior without modifying the base cart class.
+
+Purpose of using the Pattern(s)
+
+Strategy Pattern
+
+Keeps pricing logic flexible and extensible.
+
+Allows introducing new pricing rules without impacting cart structure.
+
+Decorator Pattern
+
+Prevents cart class from becoming bloated.
+
+Supports optional feature combinations cleanly.
+
+Entities (with SRP)
+
+ShoppingCart – Cart lifecycle
+
+CartItem – Product + quantity
+
+Product – Product data
+
+PricingStrategy – Price computation
+
+Discount – Discount rules
+
+PaymentProcessor – Checkout payment
+-------------------------
+
+
+File System
+
+(Hierarchical Storage System — Similar systems: Folder Management, Organization Chart System)
+
+LLD Design
+
+File System (Hierarchical Storage System)
+
+Works on Pattern(s)
+
+Composite Pattern (Primary)
+
+How it works
+
+Composite Pattern
+
+Files and directories implement a common interface.
+
+Directories recursively contain files or other directories, enabling tree traversal.
+
+Purpose of using the Pattern(s)
+
+Composite Pattern
+
+Allows treating individual objects and compositions uniformly.
+
+Simplifies recursive operations like size calculation and deletion.
+
+Entities (with SRP)
+
+File – File data & operations
+
+Directory – Collection of files/directories
+
+FileSystem – Traversal & coordination
+
+Permission – Access control
+-------------------------
+
+
+YouTube
+
+(Video Streaming Platform — Similar systems: Netflix, Hotstar, OTT Streaming Platforms)
+
+LLD Design
+
+Video Streaming Platform
+
+Works on Pattern(s)
+
+Observer Pattern (Primary)
+
+Strategy Pattern (Secondary)
+
+How it works
+
+Observer Pattern
+
+Users subscribe to channels.
+
+When a creator uploads a video, all subscribers are notified automatically.
+
+Strategy Pattern
+
+Video streaming quality (240p, 720p, 4K) is selected dynamically based on network conditions.
+
+Recommendation algorithms can also be swapped as strategies.
+
+Purpose of using the Pattern(s)
+
+Observer Pattern
+
+Decouples content creators from subscribers.
+
+Enables scalable notification delivery.
+
+Strategy Pattern
+
+Allows flexible playback and recommendation logic.
+
+Improves user experience across different devices and networks.
+
+Entities (with SRP)
+
+User – User profile
+
+Channel – Content ownership
+
+Video – Video metadata
+
+Subscription – Subscription relationship
+
+StreamingStrategy – Quality selection
+
+RecommendationStrategy – Content recommendation
+
+Notification – Subscriber alerts
+-------------------------
+
+
+WhatsApp / 📸 Instagram
+
+(Messaging & Social Platform — Similar systems: Telegram, Signal, Facebook Messenger)
+
+LLD Design
+
+Messaging & Social Platform
+
+Works on Pattern(s)
+
+Observer Pattern (Primary)
+
+Mediator Pattern (Secondary)
+
+How it works
+
+Observer Pattern
+
+Users subscribe to chats, groups, or profiles.
+
+When a message, status, or post is created, observers are notified in real time.
+
+Mediator Pattern
+
+The server acts as a mediator between users.
+
+Clients do not communicate directly; all messages pass through the mediator.
+
+Purpose of using the Pattern(s)
+
+Observer Pattern
+
+Enables real-time updates like message delivery, typing indicators, and read receipts.
+
+Keeps sender and receiver loosely coupled.
+
+Mediator Pattern
+
+Simplifies communication logic.
+
+Centralizes routing, validation, encryption, and delivery rules.
+
+
+Entities (with SRP)
+
+User – User profile
+
+Message – Message content
+
+Chat – Conversation handling
+
+Group – Group rules
+
+Media – Media processing
+
+Notification – Delivery & read alerts
