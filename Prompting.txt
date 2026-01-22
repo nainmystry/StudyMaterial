@@ -1,0 +1,350 @@
+# For different tasks:
+
+# 1. FACTUAL ACCURACY
+"Based on [sources], answer [question]. Cite evidence."
+
+# 2. CREATIVE WRITING  
+"Write [type] about [topic] in [style] with [elements]."
+
+# 3. CODE GENERATION
+"Write [language] code that [does X]. Include [features]."
+
+# 4. ANALYSIS
+"Analyze [data] to find [insights]. Consider [perspectives]."
+
+# 5. PLANNING
+"Create plan for [goal] with [steps], [timeline], [resources]."
+
+# 6. PROBLEM-SOLVING
+"Solve [problem] by [approach]. Show work and verify."
+
+# 7. LEARNING/EXPLANATION
+"Explain [concept] to [audience] using [analogies/examples]."
+
+# 8. DECISION MAKING
+"Compare [options] on [criteria]. Recommend [choice] with rationale."
+
+
+
+
+Zero-Shot Prompting: (Simple Q&A)
+Direct questions without examples, for simple Q&A with low complexity when you need quick answers. 
+Example prompt: "Explain quantum computing in simple terms."
+
+Few-Shot Prompting: (Format-specific tasks)
+Providing examples to establish patterns, for format-specific tasks with medium complexity when teaching output structure. 
+Example prompt: "Paris→France, Tokyo→Japan, London→?"
+
+Chain-of-Thought (CoT): (Math, logic problems)
+Step-by-step reasoning demonstration, for math/logic problems with medium complexity when improving accuracy on complex reasoning. 
+Example prompt: "Let's think step by step: If I have 5 apples..."
+
+Tree of Thoughts (ToT): (Planning, creativity)
+Exploring multiple reasoning paths systematically, for planning/creativity with high complexity when needing comprehensive solution exploration. 
+Example prompt: "Generate 3 approaches to solve X, evaluate each, then choose best."
+
+ReAct (Reason + Act): (Factual accuracy)
+Combining reasoning with tool use, for factual accuracy with high complexity when integrating external tools/search. 
+Example prompt: "Thought: I need to search... Action: Search[query]... Observation: ..."
+
+RAG (Retrieval-Augmented): (Domain-specific tasks)
+Grounding answers in external documents, for domain-specific tasks with medium complexity when requiring factual grounding. 
+Example prompt: "Based on this document: [doc text], answer: [question]"
+
+Role-Playing: (Specific personas)
+Assigning specific personas/styles, for specific personas with low complexity when controlling response tone or expertise. 
+Example prompt: "You are a senior engineer. Explain microservices..."
+
+Structured Output: (APIs, automation)
+Enforcing specific formats, for APIs/automation with medium complexity when integration requires consistent structure. 
+Example prompt: "Output as JSON: {'answer': '', 'confidence': 0-1}"
+
+
+
+
+CLEAR FRAMEWORK
+C = Concise: Remove unnecessary words
+L = Logical: Clear structure and flow
+E = Explicit: Unambiguous instructions
+A = Adaptive: Adjust to context
+R = Reflective: Include verification steps
+
+# Example applying CLEAR:
+prompt = """
+Summarize this article in 200 words.  # Concise
+First identify main points, then write summary.  # Logical
+Use only information from the article.  # Explicit
+If technical terms, explain simply.  # Adaptive
+Verify summary captures all key points.  # Reflective
+"""
+
+
+Hyper Params:
+Temperature: Controls output randomness (0=deterministic, 1=creative, 2=chaotic) for balancing consistency vs. creativity in text generation.
+Top-p (Nucleus): Limits token selection to probability mass threshold (0.1-1.0) for managing output diversity while maintaining quality.
+Top-k: Restricts sampling to k most likely tokens (1-100+) for controlling vocabulary breadth and reducing nonsense outputs.
+Frequency Penalty: Reduces probability of repeated tokens (-2.0 to 2.0) for preventing repetitive text in longer generations.
+Presence Penalty: Penalizes new tokens based on previous occurrence (-2.0 to 2.0) for encouraging topic diversity in responses.
+Max Tokens: Sets maximum output length (1-4000+) for controlling response size and managing API costs.
+Stop Sequences: Defines stopping strings (e.g., "\n\n") for controlling response termination at logical boundaries.
+
+
+
+{
+  "Usecase": "General Purpose RAG System",
+  "selection_criteria": "Balanced accuracy, speed, and cost for retrieval-augmented generation systems with mixed query types",
+  "Recommendation": [
+    {
+      "modelName": "text-embedding-3-small",
+      "provider": "OpenAI",
+      "dim": 1536,
+      "notes": "Best cost-performance ratio, good accuracy, fast inference via API"
+    },
+    {
+      "modelName": "bge-large-en-v1.5",
+      "provider": "BAAI (Open Source)",
+      "dim": 1024,
+      "notes": "SOTA open-source, top MTEB score, self-hostable"
+    },
+    {
+      "modelName": "e5-large-v2",
+      "provider": "Microsoft (Open Source)",
+      "dim": 1024,
+      "notes": "Highest MTEB score, excellent for asymmetric retrieval"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Multilingual Search/Retrieval",
+  "selection_criteria": "Support for 50+ languages, consistent performance across different languages",
+  "Recommendation": [
+    {
+      "modelName": "text-embedding-3-large",
+      "provider": "OpenAI",
+      "dim": 3072,
+      "notes": "Excellent multilingual performance, highest accuracy but higher cost"
+    },
+    {
+      "modelName": "paraphrase-multilingual-MiniLM-L12-v2",
+      "provider": "Sentence Transformers",
+      "dim": 384,
+      "notes": "Fast, supports 50+ languages, good baseline for multilingual"
+    },
+    {
+      "modelName": "jina-embeddings-v2",
+      "provider": "Jina AI",
+      "dim": 768,
+      "notes": "Optimized for long documents, 30+ languages"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Semantic Similarity & Clustering",
+  "selection_criteria": "High similarity detection accuracy, good at capturing nuanced semantic relationships",
+  "Recommendation": [
+    {
+      "modelName": "all-mpnet-base-v2",
+      "provider": "Sentence Transformers",
+      "dim": 768,
+      "notes": "Best general-purpose for semantic similarity, excellent STS benchmarks"
+    },
+    {
+      "modelName": "gte-large",
+      "provider": "Alibaba DAMO",
+      "dim": 1024,
+      "notes": "Specialized for similarity tasks, top performance on STS"
+    },
+    {
+      "modelName": "text-embedding-ada-002",
+      "provider": "OpenAI",
+      "dim": 1536,
+      "notes": "Reliable, well-tested, good for production similarity tasks"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Question-Answering & Chatbots",
+  "selection_criteria": "Optimized for query-document matching, understands question format vs statements",
+  "Recommendation": [
+    {
+      "modelName": "multi-qa-mpnet-base-dot-v1",
+      "provider": "Sentence Transformers",
+      "dim": 768,
+      "notes": "Specifically trained for Q&A retrieval, uses dot product for similarity"
+    },
+    {
+      "modelName": "msmarco-distilbert-base-v4",
+      "provider": "Microsoft",
+      "dim": 768,
+      "notes": "Trained on Bing search queries, excellent for conversational queries"
+    },
+    {
+      "modelName": "dpr-question_encoder-single-nq-base",
+      "provider": "Facebook Research",
+      "dim": 768,
+      "notes": "Dense Passage Retriever, specialized for question encoding"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Code Search & Understanding",
+  "selection_criteria": "Understands code semantics, structure, and can match natural language queries to code",
+  "Recommendation": [
+    {
+      "modelName": "codebert",
+      "provider": "Microsoft",
+      "dim": 768,
+      "notes": "BERT trained on code, understands code semantics"
+    },
+    {
+      "modelName": "graphcodebert",
+      "provider": "Microsoft",
+      "dim": 768,
+      "notes": "CodeBERT + data flow graphs, understands code structure"
+    },
+    {
+      "modelName": "unixcoder",
+      "provider": "Microsoft",
+      "dim": 768,
+      "notes": "Unified representation for code and natural language"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Fast & Low-Cost Applications",
+  "selection_criteria": "Minimal latency, low compute requirements, acceptable accuracy for simple tasks",
+  "Recommendation": [
+    {
+      "modelName": "all-MiniLM-L6-v2",
+      "provider": "Sentence Transformers",
+      "dim": 384,
+      "notes": "Fastest popular model, 5-10x faster than BERT, decent accuracy"
+    },
+    {
+      "modelName": "text-embedding-3-small",
+      "provider": "OpenAI",
+      "dim": 1536,
+      "notes": "Lowest cost API option, fast inference on OpenAI's servers"
+    },
+    {
+      "modelName": "distiluse-base-multilingual-cased-v1",
+      "provider": "Sentence Transformers",
+      "dim": 512,
+      "notes": "Distilled version of multilingual USE, faster inference"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Long Document Processing (8K+ tokens)",
+  "selection_criteria": "Handles long context, maintains coherence across document length",
+  "Recommendation": [
+    {
+      "modelName": "jina-embeddings-v2",
+      "provider": "Jina AI",
+      "dim": 768,
+      "notes": "Supports 8192 tokens, optimized for long documents"
+    },
+    {
+      "modelName": "text-embedding-3-large",
+      "provider": "OpenAI",
+      "dim": 3072,
+      "notes": "Supports 8192 tokens, highest quality for long docs"
+    },
+    {
+      "modelName": "longformer-embeddings",
+      "provider": "AllenAI (Custom)",
+      "dim": 768,
+      "notes": "Based on Longformer architecture, handles 4096+ tokens"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Scientific/Research Document Retrieval",
+  "selection_criteria": "Understands technical/scientific terminology, citation-aware",
+  "Recommendation": [
+    {
+      "modelName": "specter",
+      "provider": "AllenAI",
+      "dim": 768,
+      "notes": "Citation-based embeddings, understands paper relationships"
+    },
+    {
+      "modelName": "scincl",
+      "provider": "AllenAI",
+      "dim": 768,
+      "notes": "Extension of SPECTER, better for scientific text"
+    },
+    {
+      "modelName": "scibert",
+      "provider": "AllenAI",
+      "dim": 768,
+      "notes": "BERT trained on scientific papers, understands domain terminology"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Enterprise/Production RAG with Compliance",
+  "selection_criteria": "Self-hostable, data privacy, enterprise support, reliable performance",
+  "Recommendation": [
+    {
+      "modelName": "bge-large-en-v1.5",
+      "provider": "BAAI",
+      "dim": 1024,
+      "notes": "Self-hostable, top accuracy, commercially usable"
+    },
+    {
+      "modelName": "cohere-embed-english-v3.0",
+      "provider": "Cohere",
+      "dim": 1024,
+      "notes": "Enterprise API with SOC2 compliance, good support"
+    },
+    {
+      "modelName": "voyage-01",
+      "provider": "Voyage AI",
+      "dim": 1024,
+      "notes": "Specialized for RAG, enterprise features, high accuracy"
+    }
+  ]
+}
+
+
+{
+  "Usecase": "Image-Text Multimodal Search",
+  "selection_criteria": "Creates joint embeddings for images and text in same space",
+  "Recommendation": [
+    {
+      "modelName": "clip-vit-base-patch32",
+      "provider": "OpenAI (Open Source)",
+      "dim": 512,
+      "notes": "Most popular CLIP variant, good general performance"
+    },
+    {
+      "modelName": "openai-clip",
+      "provider": "OpenAI",
+      "dim": 512,
+      "notes": "Original CLIP model via API (when available)"
+    },
+    {
+      "modelName": "blip",
+      "provider": "Salesforce",
+      "dim": 256,
+      "notes": "Better for captioning and detailed image understanding"
+    }
+  ]
+}
