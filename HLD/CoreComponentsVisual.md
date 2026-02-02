@@ -1,7 +1,7 @@
 
 **Vending Machine HLD Core Components:**
 
-<img width="2353" height="2940" alt="image" src="https://github.com/user-attachments/assets/790e49a5-22d7-4168-af0c-0c8a33c2ffd1" />
+<img width="770" height="670" alt="image" src="https://github.com/user-attachments/assets/52472285-9a82-4cee-b5bf-9e99f4779ba0" />
 
 **Parking Lot HLD Core Components:**
 
