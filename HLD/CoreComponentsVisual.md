@@ -3,6 +3,7 @@ Vending Machine HLD Core Components:
 <img width="2353" height="2940" alt="image" src="https://github.com/user-attachments/assets/790e49a5-22d7-4168-af0c-0c8a33c2ffd1" />
 
 Parking Lot HLD Core Components:
+
 <img width="734" height="391" alt="image" src="https://github.com/user-attachments/assets/4e24c1be-2303-46e3-94c4-fd429c1dcba7" />
 
 Cache LRU HLD Core Components:
