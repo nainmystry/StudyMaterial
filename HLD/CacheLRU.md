@@ -54,6 +54,7 @@ DistributedCacheCoordinator - For distributed cache scenarios
 CacheStatistics - Analytics and reporting
 
 3. Component Diagram (PlantUML)
+<img width="881" height="779" alt="image" src="https://github.com/user-attachments/assets/3b59b999-687e-4c5a-9415-5a21a6fb55dd" />
 
 
 4. Data Flow
