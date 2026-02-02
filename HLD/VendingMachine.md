@@ -17,16 +17,25 @@ Core Entities (with SRP):
 VendingMachineController - Main orchestrator, manages state transitions
 
 State Interface - Base for all state behaviors
+
 IdleState - Waits for user interaction
+
 HasMoneyState - Handles payment processing
+
 DispensingState - Controls item dispensing
+
 OutOfStockState - Manages unavailable products
+
 ErrorState - Handles hardware/transaction errors
 
 Command Interface - Base for user actions
+
 SelectItemCommand - Validates and selects product
+
 InsertCoinCommand - Processes cash payments
+
 ProcessCardCommand - Handles card transactions
+
 CancelCommand - Aborts transaction, refunds if needed
 
 Product - Product details (ID, name, price, weight)
