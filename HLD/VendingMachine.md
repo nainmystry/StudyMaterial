@@ -1,5 +1,7 @@
-Vending Machine HLD for Interview
+**Vending Machine HLD for Interview**
+
 High-Level Overview:
+
 The Vending Machine is an automated dispensing system that allows users to select products, pay, and receive items. 
 It follows a state-driven and command-driven design for clear behavior separation and extensibility.
 
