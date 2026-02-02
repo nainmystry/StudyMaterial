@@ -60,6 +60,7 @@ AnalyticsEngine - Usage patterns, revenue reports
 
 3. Component Diagram (PlantUML)
 
+<img width="3159" height="737" alt="image" src="https://github.com/user-attachments/assets/ebe257e6-1366-45b9-b86a-d3d639482e79" />
 
 
 4. Data Flow
